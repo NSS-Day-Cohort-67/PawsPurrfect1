@@ -1,0 +1,17 @@
+table meme {
+  id int
+  userId int
+  image string
+  title string
+  description string
+  longName string
+}
+
+table user {
+  id int
+  username string
+  password string
+  userMemes list
+}
+
+Ref: "user"."id" < "meme"."userId"
