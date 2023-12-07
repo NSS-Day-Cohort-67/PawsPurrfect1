@@ -4,7 +4,14 @@
 
 Console.Clear();
 
-string greeting = @"Welcome to PawsPurrfect";
+string greeting = @"
+   |\__/,|   (`\
+   |o o  |__ _)
+ _.( T   )  `  /
+((_ `^--' /_<  \
+`` `-'(((/  (((/
+
+Welcome to PawsPurrfect";
 
 string choice = null;
 
@@ -15,6 +22,7 @@ while (choice != "0")
 
 void MainMenu()
 {
+    Console.Clear();
     Console.WriteLine(@$"
 {greeting}
 
@@ -54,7 +62,9 @@ Please press any key to close the application");
             Console.ReadKey();
             break;
         default:
-            Console.WriteLine("Invalid Choice");
+            Console.Clear();
+            Console.WriteLine("Invalid Choice. Press any key to continue...");
+            Console.ReadKey();
             break;
     }
 }
