@@ -113,7 +113,7 @@ List<User> users = new List<User>()
 Console.Clear();
 
 bool UserLoggedIn = false;
-User user = null;
+User LoggedInUser = null;
 
 string loginScreen = @"Welcome to PawsPurrfect
 
@@ -160,10 +160,28 @@ void Login()
 
     Console.Write("Username: ");
     username = Console.ReadLine().ToLower().Trim();
-    Console.Write("Password: ");
-    password = Console.ReadLine().ToLower().Trim();
+    User MatchedAccount = users.FirstOrDefault(user => user.UserName.ToLower() == username);
 
-    UserLoggedIn = true;
+    if (MatchedAccount != null)
+    {
+        Console.Write("Password: ");
+        password = Console.ReadLine().ToLower().Trim();
+        if (MatchedAccount.Password == password)
+        {
+            LoggedInUser = MatchedAccount;
+            UserLoggedIn = true;
+        }
+        else 
+        {
+            Console.Write("That password is incorrect. Press any key to try again...");
+            Console.ReadKey();
+        }
+    }
+    else
+    {
+        Console.Write("That username can not be found. Press any key to try again...");
+        Console.ReadKey();
+    }
 };
 
 void MainMenu()
