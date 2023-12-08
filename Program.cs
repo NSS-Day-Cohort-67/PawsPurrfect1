@@ -1,4 +1,4 @@
-﻿List<Meme> memes = new List<Meme>()
+List<Meme> memes = new List<Meme>()
 {
     new Meme
     {
@@ -113,8 +113,8 @@ List<User> users = new List<User>()
 Console.Clear();
 
 bool UserLoggedIn = false;
-// User user = null;
-User user = users[0];
+
+User LoggedInUser = null;
 
 string loginScreen = @"Welcome to PawsPurrfect
 
@@ -161,10 +161,28 @@ void Login()
 
     Console.Write("Username: ");
     username = Console.ReadLine().ToLower().Trim();
-    Console.Write("Password: ");
-    password = Console.ReadLine().ToLower().Trim();
+    User MatchedAccount = users.FirstOrDefault(user => user.UserName.ToLower() == username);
 
-    UserLoggedIn = true;
+    if (MatchedAccount != null)
+    {
+        Console.Write("Password: ");
+        password = Console.ReadLine().ToLower().Trim();
+        if (MatchedAccount.Password == password)
+        {
+            LoggedInUser = MatchedAccount;
+            UserLoggedIn = true;
+        }
+        else
+        {
+            Console.Write("That password is incorrect. Press any key to try again...");
+            Console.ReadKey();
+        }
+    }
+    else
+    {
+        Console.Write("That username can not be found. Press any key to try again...");
+        Console.ReadKey();
+    }
 };
 
 void MainMenu()
