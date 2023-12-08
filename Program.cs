@@ -259,13 +259,13 @@ void ViewAllMemes()
         ");
         foreach (Meme meme in memes) { Console.WriteLine(@$"{memes.IndexOf(meme) + 1}. {meme.Title}"); }
 
-        Console.WriteLine(@$"
-        Choose a number to view meme...or 0 to view main menu");
+        Console.Write(@$"
+Choose a number to view meme...or 0 to view main menu: ");
 
         try
         {
             int response = int.Parse(Console.ReadLine().Trim());
-            if(response == 0)
+            if (response == 0)
             {
                 MainMenu();
                 break;
@@ -302,33 +302,28 @@ void ViewAllMemes()
             Console.ReadKey();
         }
     }
-        Console.Clear();
-        ViewMemeDetails(chosenMeme);
+    Console.Clear();
+    ViewMemeDetails(chosenMeme);
 }
 
 void ViewMemeDetails(Meme chosenMeme)
 {
 
     Console.WriteLine(@$"---------MEME DETAILS--------
-    
-    Id:{chosenMeme.Id}
-    Name: {chosenMeme.LongName}
-    UserId: {chosenMeme.UserId}
-    Title: {chosenMeme.Title}
-    Description: {chosenMeme.Description}
-    Image: 
-            {chosenMeme.Image}
-        
-        
-    Press Any Key to Retun to Main Menu...");
 
+Id:{chosenMeme.Id}
+Name: {chosenMeme.LongName}
+UserId: {chosenMeme.UserId}
+Title: {chosenMeme.Title}
+Description: {chosenMeme.Description}
+Image: 
+{chosenMeme.Image}
+    ");
+
+    Console.Write("Press Any Key to Retun to Main Menu...");
     Console.ReadKey();
-
     MainMenu();
-
 };
-
-
 
 void DeleteCat()
 {
@@ -339,86 +334,11 @@ void DeleteCat()
     Console.WriteLine("Done!");
 }
 
-<<<<<<< HEAD
-
-
-void PostMeme()
-{
-    //Get Title, Image, and Description from logged in user
-    Console.WriteLine("Please enter the details of the cat meme to be posted:");
-    // Get Title
-    Console.Write("Enter the title of your meme: ");
-    string titleToPost = "";
-    while (string.IsNullOrEmpty(titleToPost) || titleToPost.Length > 100)
-    {
-        try
-        {
-            titleToPost = Console.ReadLine();
-            if (titleToPost.Length > 100)
-            {
-                throw new TooLongException("Title is too long. Reenter the title of your meme:");
-            }
-        }
-        catch (TooLongException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
-    // Get Image
-    Console.WriteLine("Enter the ASCII Image:");
-    string imageToPost = "";
-    while (string.IsNullOrEmpty(imageToPost))
-    {
-        try
-        {
-            imageToPost = Console.ReadLine();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
-    }
-
-    // Get Description
-    Console.Write("Enter the Meme's description: ");
-    string descriptionToPost = "";
-    while (string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
-    {
-        try
-        {
-            descriptionToPost = Console.ReadLine();
-            if (descriptionToPost.Length > 500)
-            {
-                throw new TooLongException("Description is too long. Reenter the Meme's description:");
-            }
-        }
-        catch (TooLongException ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
-    Meme memeToPost = new Meme
-    {
-        UserId = LoggedInUser.Id,
-        Title = titleToPost,
-        Image = imageToPost,
-        Description = descriptionToPost
-    };
-
-    memes.Add(memeToPost);
-    Console.WriteLine("Your cat meme has been added!");
-}
-
-
-=======
->>>>>>> aa7e27cccfff8b9673d487758aba5d60cc9ca469
 public class TooLongException : Exception
 {
     public TooLongException(string message) : base(message)
     {
 
-  }
+    }
 }
 

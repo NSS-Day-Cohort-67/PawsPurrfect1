@@ -5,7 +5,7 @@ public class PostMeme
     //Get Title, Image, and Description from logged in user
     Console.WriteLine("Please enter the details of the cat meme to be posted:");
     // Get Title
-    Console.WriteLine("Enter the title of your meme:");
+    Console.Write("Enter the title of your meme: ");
     string titleToPost = "";
     while (string.IsNullOrEmpty(titleToPost) || titleToPost.Length > 100)
     {
@@ -39,7 +39,7 @@ public class PostMeme
     }
 
     // Get Description
-    Console.WriteLine("Enter the Meme's description:");
+    Console.Write("Enter the Meme's description: ");
     string descriptionToPost = "";
     while (string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
     {
