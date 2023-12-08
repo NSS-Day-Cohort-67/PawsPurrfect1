@@ -2,6 +2,8 @@ using System.Collections;
 using System.Data.Common;
 
 var gf = new GenericFunctions();
+var filterMemesByUser = new FilterMemesByUser();
+var postMeme = new PostMeme();
 
 List<Meme> memes = new List<Meme>()
 {
@@ -115,7 +117,6 @@ List<User> users = new List<User>()
     new User { Id = 4, UserName = "luc", Password = "cats" }
 };
 
-var filterMemesByUser = new FilterMemesByUser();
 
 Console.Clear();
 
@@ -224,16 +225,16 @@ Please press any key to close the application");
             Console.Clear();
             ViewAllMemes();
             break;
-        case "2":
+        case "2": // POST A CAT
             Console.Clear();
-            PostMeme();
+            postMeme.Post(LoggedInUser, memes);
             break;
         case "3": //DELETE A CAT
             Console.Clear();
             DeleteCat();
             gf.Continue();
             break;
-        case "4":
+        case "4": // FILTER CATS BY USER
             Console.Clear();
             filterMemesByUser.Filter(users, memes);
             Console.ReadKey();
@@ -338,6 +339,7 @@ void DeleteCat()
     Console.WriteLine("Done!");
 }
 
+<<<<<<< HEAD
 
 
 void PostMeme()
@@ -410,6 +412,8 @@ void PostMeme()
 }
 
 
+=======
+>>>>>>> aa7e27cccfff8b9673d487758aba5d60cc9ca469
 public class TooLongException : Exception
 {
     public TooLongException(string message) : base(message)
