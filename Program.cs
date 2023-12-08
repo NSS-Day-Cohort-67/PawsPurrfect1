@@ -201,6 +201,8 @@ Menu Navigation:
 1. View All Memes
 2. Post a New Meme
 3. Delete A Cat
+4. Filter Memes?
+5. Update a Meme
 ");
 
     Console.Write("Please Type Your Selection's Number: ");
@@ -230,6 +232,11 @@ Please press any key to close the application");
             DeleteCat();
             gf.Continue();
             break;
+        case "5": //UPDATE A MEME
+            Console.Clear();
+            UpdateMeme();
+            gf.Continue();
+            break;
         default:
             Console.Clear();
             Console.WriteLine("Invalid Choice. Press any key to continue...");
@@ -256,7 +263,7 @@ void ViewAllMemes()
         try
         {
             int response = int.Parse(Console.ReadLine().Trim());
-            if(response == 0)
+            if (response == 0)
             {
                 MainMenu();
                 break;
@@ -293,8 +300,8 @@ void ViewAllMemes()
             Console.ReadKey();
         }
     }
-        Console.Clear();
-        ViewMemeDetails(chosenMeme);
+    Console.Clear();
+    ViewMemeDetails(chosenMeme);
 }
 
 void ViewMemeDetails(Meme chosenMeme)
@@ -354,7 +361,7 @@ void PostMeme()
     // Get Image
     Console.WriteLine("Enter the ASCII Image:");
     string imageToPost = "";
-    while(string.IsNullOrEmpty(imageToPost))
+    while (string.IsNullOrEmpty(imageToPost))
     {
         try
         {
@@ -369,7 +376,7 @@ void PostMeme()
     // Get Description
     Console.WriteLine("Enter the Meme's description:");
     string descriptionToPost = "";
-    while(string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
+    while (string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
     {
         try
         {
@@ -397,12 +404,89 @@ void PostMeme()
     Console.WriteLine("Your cat meme has been added!");
 }
 
+void UpdateMeme()
+{
+    Console.Clear();
+    Meme memeSelected = gf.ChooseFromYourCats("select a meme to update...", memes, LoggedInUser); // choose a cat from catlist
+    Console.Clear();
+    Console.WriteLine(@$"Editing cat meme: {memeSelected.LongName}...
+    Press any key to continue....");
+    Console.ReadKey();
+    Console.Clear();
+
+    // ----Update Meme Title------------------
+    string newTitle = null;
+    while (string.IsNullOrWhiteSpace(newTitle))
+    {
+        Console.WriteLine(@$"Previous Meme title: {memeSelected.Title}
+    
+    Enter a new meme title:");
+        newTitle = Console.ReadLine().Trim();
+        if (string.IsNullOrWhiteSpace(newTitle))
+        {
+            Console.Clear();
+            Console.WriteLine("please enter a valid title...");
+        }
+    }
+
+    Console.WriteLine($"New Title: {newTitle}? Press any key to continue");
+    Console.ReadKey();
+    Console.Clear();
+
+    // ----Update Meme Description-------------
+    string newDesc = null;
+    while (string.IsNullOrWhiteSpace(newDesc))
+    {
+        Console.WriteLine(@$"Previous Meme description: {memeSelected.Description}
+    
+    Enter a new meme description:");
+        newDesc = Console.ReadLine().Trim();
+        if (string.IsNullOrWhiteSpace(newDesc))
+        {
+            Console.Clear();
+            Console.WriteLine("please enter a valid description...");
+        }
+    }
+
+    Console.WriteLine($"New Description: {newDesc}? Press any key to continue");
+    Console.ReadKey();
+    Console.Clear();
+
+    // ----Update Meme Image--------------------
+    string newImg = null;
+    while (string.IsNullOrWhiteSpace(newImg))
+    {
+        Console.WriteLine(@$"Previous Meme description: {memeSelected.Image}
+    
+    Enter a new meme image:");
+        newImg = Console.ReadLine().Trim();
+        if (string.IsNullOrWhiteSpace(newImg))
+        {
+            Console.Clear();
+            Console.WriteLine("please enter a valid image...");
+        }
+    }
+
+    Console.WriteLine($"New Image: {newImg}? Press any key to continue");
+    Console.ReadKey();
+    Console.Clear();
+
+    // ----Update Meme
+    memeSelected.UserId = LoggedInUser.Id;
+    memeSelected.Title = newTitle;
+    memeSelected.Image = newImg;
+    memeSelected.Description = newDesc;
+    Console.WriteLine("Press any key to view updated meme details!");
+    Console.ReadKey();
+    ViewMemeDetails(memeSelected);
+}
+
 
 public class TooLongException : Exception
 {
-  public TooLongException(string message) : base(message)
-  {
+    public TooLongException(string message) : base(message)
+    {
 
-  }
+    }
 }
 
