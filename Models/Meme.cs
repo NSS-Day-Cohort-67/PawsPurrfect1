@@ -7,6 +7,6 @@ public class Meme
     public string Description { get; set; }
     public string LongName
     {
-        get { return Title + Description; }
+        get { return Title + " " + Description; }
     }
 }
