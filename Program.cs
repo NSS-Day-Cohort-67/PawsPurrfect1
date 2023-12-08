@@ -1,4 +1,4 @@
-List<Meme> memes = new List<Meme>()
+﻿List<Meme> memes = new List<Meme>()
 {
     new Meme
     {
@@ -253,7 +253,7 @@ void PostMeme()
     //Get Title, Image, and Description from logged in user
     Console.WriteLine("Please enter the details of the cat meme to be posted:");
     // Get Title
-    Console.WriteLine("Enter the title of your meme:");
+    Console.Write("Enter the title of your meme: ");
     string titleToPost = "";
     while (string.IsNullOrEmpty(titleToPost) || titleToPost.Length > 100)
     {
@@ -274,7 +274,7 @@ void PostMeme()
     // Get Image
     Console.WriteLine("Enter the ASCII Image:");
     string imageToPost = "";
-    while(string.IsNullOrEmpty(imageToPost))
+    while (string.IsNullOrEmpty(imageToPost))
     {
         try
         {
@@ -287,9 +287,9 @@ void PostMeme()
     }
 
     // Get Description
-    Console.WriteLine("Enter the Meme's description:");
+    Console.Write("Enter the Meme's description: ");
     string descriptionToPost = "";
-    while(string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
+    while (string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
     {
         try
         {
@@ -307,7 +307,7 @@ void PostMeme()
 
     Meme memeToPost = new Meme
     {
-        UserId = user.Id,
+        UserId = LoggedInUser.Id,
         Title = titleToPost,
         Image = imageToPost,
         Description = descriptionToPost
@@ -321,8 +321,8 @@ void PostMeme()
 
 public class TooLongException : Exception
 {
-  public TooLongException(string message) : base(message)
-  {
+    public TooLongException(string message) : base(message)
+    {
 
-  }
+    }
 }
