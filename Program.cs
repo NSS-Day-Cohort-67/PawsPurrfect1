@@ -102,7 +102,6 @@
         Description = "A cat ready for an adventure"
     }
 };
-
 List<User> users = new List<User>()
 {
     new User { Id = 1, UserName = "josh", Password = "cats" },
@@ -112,6 +111,29 @@ List<User> users = new List<User>()
 };
 
 Console.Clear();
+
+bool UserLoggedIn = false;
+User user = null;
+
+string loginScreen = @"Welcome to PawsPurrfect
+
+                      /^--^\     /^--^\     /^--^\
+                      \____/     \____/     \____/
+                     /      \   /      \   /      \
+KAT                 |        | |        | |        |
+                     \__  __/   \__  __/   \__  __/
+|^|^|^|^|^|^|^|^|^|^|^|^\ \^|^|^|^/ /^|^|^|^|^\ \^|^|^|^|^|^|^|^|^|^|^|^|
+| | | | | | | | | | | | |\ \| | |/ /| | | | | | \ \ | | | | | | | | | | |
+########################/ /######\ \###########/ /#######################
+| | | | | | | | | | | | \/| | | | \/| | | | | |\/ | | | | | | | | | | | |
+|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+
+Please Login To Continue";
+
+while (!UserLoggedIn)
+{
+    Login();
+}
 
 string greeting = @"Welcome to PawsPurrfect
 
@@ -127,6 +149,22 @@ while (choice != "0")
 {
     MainMenu();
 }
+
+void Login()
+{
+    string username = null;
+    string password = null;
+
+    Console.Clear();
+    Console.WriteLine(@$"{loginScreen}");
+
+    Console.Write("Username: ");
+    username = Console.ReadLine().ToLower().Trim();
+    Console.Write("Password: ");
+    password = Console.ReadLine().ToLower().Trim();
+
+    UserLoggedIn = true;
+};
 
 void MainMenu()
 {
