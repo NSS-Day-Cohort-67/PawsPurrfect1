@@ -115,6 +115,8 @@ List<User> users = new List<User>()
     new User { Id = 4, UserName = "luc", Password = "cats" }
 };
 
+var filterMemesByUser = new FilterMemesByUser();
+
 Console.Clear();
 
 bool UserLoggedIn = false;
@@ -201,6 +203,7 @@ Menu Navigation:
 1. View All Memes
 2. Post a New Meme
 3. Delete A Cat
+4. See a Users Memes
 ");
 
     Console.Write("Please Type Your Selection's Number: ");
@@ -229,6 +232,11 @@ Please press any key to close the application");
             Console.Clear();
             DeleteCat();
             gf.Continue();
+            break;
+        case "4":
+            Console.Clear();
+            filterMemesByUser.Filter(users, memes);
+            Console.ReadKey();
             break;
         default:
             Console.Clear();
@@ -391,7 +399,7 @@ void PostMeme()
 
     Meme memeToPost = new Meme
     {
-        UserId = user.Id,
+        UserId = LoggedInUser.Id,
         Title = titleToPost,
         Image = imageToPost,
         Description = descriptionToPost
@@ -400,7 +408,6 @@ void PostMeme()
     memes.Add(memeToPost);
     Console.WriteLine("Your cat meme has been added!");
 }
-
 
 
 public class TooLongException : Exception
