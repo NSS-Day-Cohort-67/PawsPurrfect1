@@ -26,8 +26,6 @@ public class GenericFunctions
                 Console.WriteLine("Please Try Again...");
             }
         }
-
         return CatToReturn;
-
     }
 } 

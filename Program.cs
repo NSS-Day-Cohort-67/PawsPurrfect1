@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Data.Common;
 
 var gf = new GenericFunctions();
@@ -319,8 +319,6 @@ void ViewMemeDetails(Meme chosenMeme)
 
 };
 
-
-
 void DeleteCat()
 {
     Meme chosenCat = gf.ChooseFromListOfCats("Choose a Cat to Banish!!! o:", memes); //prompt, catlist
@@ -329,8 +327,6 @@ void DeleteCat()
     memes.Remove(chosenCat);
     Console.WriteLine("Done!");
 }
-
-
 
 void PostMeme()
 {
@@ -391,7 +387,7 @@ void PostMeme()
 
     Meme memeToPost = new Meme
     {
-        UserId = user.Id,
+        UserId = LoggedInUser.Id,
         Title = titleToPost,
         Image = imageToPost,
         Description = descriptionToPost
@@ -400,7 +396,6 @@ void PostMeme()
     memes.Add(memeToPost);
     Console.WriteLine("Your cat meme has been added!");
 }
-
 
 
 public class TooLongException : Exception
