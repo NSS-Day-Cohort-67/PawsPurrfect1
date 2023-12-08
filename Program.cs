@@ -1,3 +1,8 @@
+using System.Data.Common;
+
+var gf = new GenericFunctions();
+
+
 List<Meme> memes = new List<Meme>()
 {
     new Meme
@@ -195,7 +200,7 @@ Menu Navigation:
 0. Exit
 1. View All Memes
 2. Post a New Meme
-3. Something Else
+3. Delete A Cat
 ");
 
     Console.Write("Please Type Your Selection's Number: ");
@@ -212,7 +217,7 @@ Please press any key to close the application");
             Console.ReadKey();
             Console.Clear();
             break;
-        case "1":
+        case "1": //VIEW ALL CATS
             Console.Clear();
             ViewAllMemes();
             break;
@@ -220,10 +225,10 @@ Please press any key to close the application");
             Console.Clear();
             PostMeme();
             break;
-        case "3":
+        case "3": //DELETE A CAT
             Console.Clear();
-            Console.WriteLine("This isn't implemented yet. Press any key to continue...");
-            Console.ReadKey();
+            DeleteCat();
+            gf.Continue();
             break;
         default:
             Console.Clear();
@@ -247,6 +252,20 @@ void ViewAllMemes()
 Please press any key to continue...");
     Console.ReadKey();
 };
+
+
+//============================================================Luc's Voids======================================================================
+
+void DeleteCat()
+{
+    Meme chosenCat = gf.ChooseFromListOfCats("Choose a Cat to Banish!!! o:", memes); //prompt, catlist
+
+    Console.WriteLine($"Banishing {chosenCat.Title}.....");
+    memes.Remove(chosenCat);
+    Console.WriteLine("Done!");
+}
+
+//============================================================END OF Luc's Voids======================================================================
 
 void PostMeme()
 {
