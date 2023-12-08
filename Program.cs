@@ -1,4 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
+using System.Data.Common;
+
+var gf = new GenericFunctions();
 
 List<Meme> memes = new List<Meme>()
 {
@@ -108,14 +111,15 @@ List<User> users = new List<User>()
 {
     new User { Id = 1, UserName = "josh", Password = "cats" },
     new User { Id = 2, UserName = "ryan", Password = "cats" },
-    new User { Id = 3, UserName = "rebeca", Password = "cats" },
+    new User { Id = 3, UserName = "rebecca", Password = "cats" },
     new User { Id = 4, UserName = "luc", Password = "cats" }
 };
 
 Console.Clear();
 
 bool UserLoggedIn = false;
-User user = null;
+
+User LoggedInUser = null;
 
 string loginScreen = @"Welcome to PawsPurrfect
 
@@ -162,10 +166,28 @@ void Login()
 
     Console.Write("Username: ");
     username = Console.ReadLine().ToLower().Trim();
-    Console.Write("Password: ");
-    password = Console.ReadLine().ToLower().Trim();
+    User MatchedAccount = users.FirstOrDefault(user => user.UserName.ToLower() == username);
 
-    UserLoggedIn = true;
+    if (MatchedAccount != null)
+    {
+        Console.Write("Password: ");
+        password = Console.ReadLine().ToLower().Trim();
+        if (MatchedAccount.Password == password)
+        {
+            LoggedInUser = MatchedAccount;
+            UserLoggedIn = true;
+        }
+        else
+        {
+            Console.Write("That password is incorrect. Press any key to try again...");
+            Console.ReadKey();
+        }
+    }
+    else
+    {
+        Console.Write("That username can not be found. Press any key to try again...");
+        Console.ReadKey();
+    }
 };
 
 void MainMenu()
@@ -177,8 +199,8 @@ void MainMenu()
 Menu Navigation:
 0. Exit
 1. View All Memes
-2. Something Else
-3. Something Else
+2. Post a New Meme
+3. Delete A Cat
 ");
 
     Console.Write("Please Type Your Selection's Number: ");
@@ -195,19 +217,18 @@ Please press any key to close the application");
             Console.ReadKey();
             Console.Clear();
             break;
-        case "1":
+        case "1": //VIEW ALL CATS
             Console.Clear();
             ViewAllMemes();
             break;
         case "2":
             Console.Clear();
-            Console.WriteLine("This isn't implemented yet. Press any key to continue...");
-            Console.ReadKey();
+            PostMeme();
             break;
-        case "3":
+        case "3": //DELETE A CAT
             Console.Clear();
-            Console.WriteLine("This isn't implemented yet. Press any key to continue...");
-            Console.ReadKey();
+            DeleteCat();
+            gf.Continue();
             break;
         default:
             Console.Clear();
@@ -293,6 +314,100 @@ void ViewMemeDetails(Meme chosenMeme)
     Press Any Key to Retun to Main Menu...");
 
     Console.ReadKey();
+
     MainMenu();
-    
+
 };
+
+
+
+void DeleteCat()
+{
+    Meme chosenCat = gf.ChooseFromListOfCats("Choose a Cat to Banish!!! o:", memes); //prompt, catlist
+
+    Console.WriteLine($"Banishing {chosenCat.Title}.....");
+    memes.Remove(chosenCat);
+    Console.WriteLine("Done!");
+}
+
+
+
+void PostMeme()
+{
+    //Get Title, Image, and Description from logged in user
+    Console.WriteLine("Please enter the details of the cat meme to be posted:");
+    // Get Title
+    Console.WriteLine("Enter the title of your meme:");
+    string titleToPost = "";
+    while (string.IsNullOrEmpty(titleToPost) || titleToPost.Length > 100)
+    {
+        try
+        {
+            titleToPost = Console.ReadLine();
+            if (titleToPost.Length > 100)
+            {
+                throw new TooLongException("Title is too long. Reenter the title of your meme:");
+            }
+        }
+        catch (TooLongException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    // Get Image
+    Console.WriteLine("Enter the ASCII Image:");
+    string imageToPost = "";
+    while(string.IsNullOrEmpty(imageToPost))
+    {
+        try
+        {
+            imageToPost = Console.ReadLine();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    // Get Description
+    Console.WriteLine("Enter the Meme's description:");
+    string descriptionToPost = "";
+    while(string.IsNullOrEmpty(descriptionToPost) || descriptionToPost.Length > 500)
+    {
+        try
+        {
+            descriptionToPost = Console.ReadLine();
+            if (descriptionToPost.Length > 500)
+            {
+                throw new TooLongException("Description is too long. Reenter the Meme's description:");
+            }
+        }
+        catch (TooLongException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    Meme memeToPost = new Meme
+    {
+        UserId = user.Id,
+        Title = titleToPost,
+        Image = imageToPost,
+        Description = descriptionToPost
+    };
+
+    memes.Add(memeToPost);
+    Console.WriteLine("Your cat meme has been added!");
+}
+
+
+
+public class TooLongException : Exception
+{
+  public TooLongException(string message) : base(message)
+  {
+
+  }
+}
+
