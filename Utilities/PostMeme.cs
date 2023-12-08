@@ -57,8 +57,11 @@ public class PostMeme
       }
     }
 
+    int newMemeId = memes.Count + 1;
+
     Meme memeToPost = new Meme
     {
+      Id = newMemeId,
       UserId = user.Id,
       Title = titleToPost,
       Image = imageToPost,
