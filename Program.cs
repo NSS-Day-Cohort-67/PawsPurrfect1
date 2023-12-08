@@ -1,4 +1,6 @@
-﻿List<Meme> memes = new List<Meme>()
+﻿using System.Collections;
+
+List<Meme> memes = new List<Meme>()
 {
     new Meme
     {
@@ -217,15 +219,80 @@ Please press any key to close the application");
 
 void ViewAllMemes()
 {
-    Console.WriteLine(@"All Cat Memes
-    ");
 
-    foreach (Meme meme in memes)
+    Meme chosenMeme = null;
+
+    while (chosenMeme == null)
     {
-        Console.WriteLine(@$"{memes.IndexOf(meme) + 1}. {meme.Title}");
-    }
+        Console.Clear();
+        Console.WriteLine(@"All Cat Memes
+        ");
+        foreach (Meme meme in memes) { Console.WriteLine(@$"{memes.IndexOf(meme) + 1}. {meme.Title}"); }
 
-    Console.WriteLine(@$"
-Please press any key to continue...");
+        Console.WriteLine(@$"
+        Choose a number to view meme...or 0 to view main menu");
+
+        try
+        {
+            int response = int.Parse(Console.ReadLine().Trim());
+            if(response == 0)
+            {
+                MainMenu();
+                break;
+            }
+            foreach (Meme meme in memes)
+            {
+                if (response - 1 == memes.IndexOf(meme))
+                {
+                    chosenMeme = meme;
+                    break;
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            Console.Clear();
+            Console.WriteLine("Please type a valid number with no whitespace...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.Clear();
+            Console.WriteLine("Please choose an existing meme only...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+        catch (Exception ex)
+        {
+            Console.Clear();
+            Console.WriteLine(ex);
+            Console.WriteLine("NOPE...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+    }
+        Console.Clear();
+        ViewMemeDetails(chosenMeme);
+}
+
+void ViewMemeDetails(Meme chosenMeme)
+{
+
+    Console.WriteLine(@$"---------MEME DETAILS--------
+    
+    Id:{chosenMeme.Id}
+    Name: {chosenMeme.LongName}
+    UserId: {chosenMeme.UserId}
+    Title: {chosenMeme.Title}
+    Description: {chosenMeme.Description}
+    Image: 
+            {chosenMeme.Image}
+        
+        
+    Press Any Key to Retun to Main Menu...");
+
     Console.ReadKey();
+    MainMenu();
+    
 };
