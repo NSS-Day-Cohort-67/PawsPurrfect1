@@ -2,6 +2,8 @@
 using System.Data.Common;
 
 var gf = new GenericFunctions();
+var filterMemesByUser = new FilterMemesByUser();
+var postMeme = new PostMeme();
 
 List<Meme> memes = new List<Meme>()
 {
@@ -115,6 +117,7 @@ List<User> users = new List<User>()
     new User { Id = 4, UserName = "luc", Password = "cats" }
 };
 
+
 Console.Clear();
 
 bool UserLoggedIn = false;
@@ -201,7 +204,7 @@ Menu Navigation:
 1. View All Memes
 2. Post a New Meme
 3. Delete A Cat
-4. Filter Memes?
+4. See a Users Memes
 5. Update a Meme
 ");
 
@@ -223,20 +226,24 @@ Please press any key to close the application");
             Console.Clear();
             ViewAllMemes();
             break;
-        case "2":
+        case "2": // POST A CAT
             Console.Clear();
-            PostMeme();
+            postMeme.Post(LoggedInUser, memes);
             break;
         case "3": //DELETE A CAT
             Console.Clear();
             DeleteCat();
             gf.Continue();
             break;
+        case "4": // FILTER CATS BY USER
+            Console.Clear();
+            filterMemesByUser.Filter(users, memes);
+            Console.ReadKey();
+            break;
         case "5": //UPDATE A MEME
             Console.Clear();
             UpdateMeme();
             gf.Continue();
-            break;
         default:
             Console.Clear();
             Console.WriteLine("Invalid Choice. Press any key to continue...");
@@ -480,7 +487,6 @@ void UpdateMeme()
     Console.ReadKey();
     ViewMemeDetails(memeSelected);
 }
-
 
 public class TooLongException : Exception
 {
