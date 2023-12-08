@@ -106,7 +106,7 @@ List<User> users = new List<User>()
 {
     new User { Id = 1, UserName = "josh", Password = "cats" },
     new User { Id = 2, UserName = "ryan", Password = "cats" },
-    new User { Id = 3, UserName = "rebeca", Password = "cats" },
+    new User { Id = 3, UserName = "rebecca", Password = "cats" },
     new User { Id = 4, UserName = "luc", Password = "cats" }
 };
 
@@ -171,7 +171,7 @@ void Login()
             LoggedInUser = MatchedAccount;
             UserLoggedIn = true;
         }
-        else 
+        else
         {
             Console.Write("That password is incorrect. Press any key to try again...");
             Console.ReadKey();
