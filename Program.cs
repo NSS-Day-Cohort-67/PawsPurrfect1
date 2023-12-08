@@ -1,4 +1,9 @@
-﻿List<Meme> memes = new List<Meme>()
+using System.Collections;
+using System.Data.Common;
+
+var gf = new GenericFunctions();
+
+List<Meme> memes = new List<Meme>()
 {
     new Meme
     {
@@ -195,7 +200,7 @@ Menu Navigation:
 0. Exit
 1. View All Memes
 2. Post a New Meme
-3. Something Else
+3. Delete A Cat
 ");
 
     Console.Write("Please Type Your Selection's Number: ");
@@ -212,7 +217,7 @@ Please press any key to close the application");
             Console.ReadKey();
             Console.Clear();
             break;
-        case "1":
+        case "1": //VIEW ALL CATS
             Console.Clear();
             ViewAllMemes();
             break;
@@ -220,10 +225,10 @@ Please press any key to close the application");
             Console.Clear();
             PostMeme();
             break;
-        case "3":
+        case "3": //DELETE A CAT
             Console.Clear();
-            Console.WriteLine("This isn't implemented yet. Press any key to continue...");
-            Console.ReadKey();
+            DeleteCat();
+            gf.Continue();
             break;
         default:
             Console.Clear();
@@ -235,18 +240,97 @@ Please press any key to close the application");
 
 void ViewAllMemes()
 {
-    Console.WriteLine(@"All Cat Memes
-    ");
 
-    foreach (Meme meme in memes)
+    Meme chosenMeme = null;
+
+    while (chosenMeme == null)
     {
-        Console.WriteLine(@$"{memes.IndexOf(meme) + 1}. {meme.Title}");
-    }
+        Console.Clear();
+        Console.WriteLine(@"All Cat Memes
+        ");
+        foreach (Meme meme in memes) { Console.WriteLine(@$"{memes.IndexOf(meme) + 1}. {meme.Title}"); }
 
-    Console.WriteLine(@$"
-Please press any key to continue...");
+        Console.WriteLine(@$"
+        Choose a number to view meme...or 0 to view main menu");
+
+        try
+        {
+            int response = int.Parse(Console.ReadLine().Trim());
+            if(response == 0)
+            {
+                MainMenu();
+                break;
+            }
+            foreach (Meme meme in memes)
+            {
+                if (response - 1 == memes.IndexOf(meme))
+                {
+                    chosenMeme = meme;
+                    break;
+                }
+            }
+        }
+        catch (FormatException)
+        {
+            Console.Clear();
+            Console.WriteLine("Please type a valid number with no whitespace...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.Clear();
+            Console.WriteLine("Please choose an existing meme only...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+        catch (Exception ex)
+        {
+            Console.Clear();
+            Console.WriteLine(ex);
+            Console.WriteLine("NOPE...");
+            Console.WriteLine("Press any key to try again.");
+            Console.ReadKey();
+        }
+    }
+        Console.Clear();
+        ViewMemeDetails(chosenMeme);
+}
+
+void ViewMemeDetails(Meme chosenMeme)
+{
+
+    Console.WriteLine(@$"---------MEME DETAILS--------
+    
+    Id:{chosenMeme.Id}
+    Name: {chosenMeme.LongName}
+    UserId: {chosenMeme.UserId}
+    Title: {chosenMeme.Title}
+    Description: {chosenMeme.Description}
+    Image: 
+            {chosenMeme.Image}
+        
+        
+    Press Any Key to Retun to Main Menu...");
+
     Console.ReadKey();
+
+    MainMenu();
+
 };
+
+
+
+void DeleteCat()
+{
+    Meme chosenCat = gf.ChooseFromListOfCats("Choose a Cat to Banish!!! o:", memes); //prompt, catlist
+
+    Console.WriteLine($"Banishing {chosenCat.Title}.....");
+    memes.Remove(chosenCat);
+    Console.WriteLine("Done!");
+}
+
+
 
 void PostMeme()
 {
@@ -324,5 +408,6 @@ public class TooLongException : Exception
     public TooLongException(string message) : base(message)
     {
 
-    }
+  }
 }
+
